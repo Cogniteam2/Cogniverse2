@@ -2,21 +2,39 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="bg-white shadow-sm">
-      <nav className="container mx-auto px-6 py-4">
+    <header
+      className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[90%] md:w-[80%] shadow-lg backdrop-blur-lg transition-all duration-300 ${
+        isScrolled ? "bg-white/70" : "bg-white/50"
+      } rounded-2xl border border-white/20`}
+    >
+      <nav className="px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-blue-900">
             Cogniverse
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 mr-2">
             <Link href="/" className="text-gray-600 hover:text-blue-900">
               Home
             </Link>
@@ -26,12 +44,7 @@ export default function Header() {
             <Link href="/contact" className="text-gray-600 hover:text-blue-900">
               Contact
             </Link>
-            <Link
-              href="/contact"
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
-            >
-              Get Started
-            </Link>
+            
           </div>
 
           {/* Mobile Menu Button */}
@@ -70,13 +83,6 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
-            </Link>
-            <Link
-              href="/contact"
-              className="block px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Get Started
             </Link>
           </div>
         )}

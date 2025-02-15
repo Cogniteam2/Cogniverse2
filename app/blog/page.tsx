@@ -34,7 +34,7 @@ export default function Blog() {
   return (
     <main className="min-h-screen bg-gray-50">
       <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-green-800 py-16">
-        <div className="container mx-auto px-6">
+        <div className="mt-10 container mx-auto px-6">
           <h1 className="text-4xl font-bold text-white mb-4">Our Blog</h1>
           <p className="text-gray-200">Insights and updates from the Cogniverse team</p>
         </div>

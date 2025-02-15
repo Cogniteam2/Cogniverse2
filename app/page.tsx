@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Brain, Building, Users } from "lucide-react";
+import { ArrowRight, Brain, Building, Users,Target, Compass, Eye, } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -21,54 +21,154 @@ export default function Home() {
               At Cogniverse, we bridge the gap between human creativity and artificial intelligence, 
               creating solutions that shape the future of technology.
             </p>
-            <Link 
-              href="/contact"
-              className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
           </div>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-green-50 via-white to-white"></div>
-        <div className="container mx-auto px-6 relative">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-4xl font-bold text-blue-900 mb-6">Our Mission</h2>
-            <p className="text-lg text-gray-700">
-              We strive to create innovative AI solutions that empower businesses 
-              and individuals to achieve their full potential in the digital age.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                <Brain className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">Innovation First</h3>
-              <p className="text-gray-600">Pushing the boundaries of what's possible with AI technology.</p>
+      <section className="py-20 bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 items-center gap-8">
+            {/* Text Column */}
+            <div className="order-2 md:order-1 flex flex-col text-center md:text-left space-y-4 md:space-y-6">
+              <h2 className="text-4xl font-extrabold text-white">
+                Our Mission
+              </h2>
+              <p className="text-lg text-gray-200 leading-relaxed">
+                To empower businesses and individuals with cutting-edge AI solutions that
+                drive innovation, efficiency, and growth in an ever-evolving digital
+                landscape. We strive to democratize artificial intelligence, making it
+                accessible and beneficial for all sectors of society.
+              </p>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-blue-600" />
+            {/* Icon Column */}
+            <div className="order-1 md:order-2 flex justify-center md:justify-end">
+              <div
+                className="
+                  rounded-full
+                  p-6
+                  bg-gradient-to-tr
+                  from-green-600
+                  via-green-400
+                  to-green-500
+                  shadow-lg
+                  transition
+                  duration-300
+                  transform
+                  hover:scale-105
+                  hover:brightness-110
+                  cursor-pointer
+                "
+              >
+                <Target className="w-14 h-14 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">Human-Centered</h3>
-              <p className="text-gray-600">Creating solutions that enhance human capabilities, not replace them.</p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                <Building className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">Sustainable Growth</h3>
-              <p className="text-gray-600">Building solutions that scale with your business needs.</p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Values Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 items-center gap-8">
+            {/* Icon Column (swapped order) */}
+            <div className="flex justify-center md:justify-start">
+              <div
+                className="
+                  rounded-full
+                  p-6
+                  bg-gradient-to-tr
+                  from-green-600
+                  via-green-400
+                  to-green-500
+                  shadow-lg
+                  transition
+                  duration-300
+                  transform
+                  hover:scale-105
+                  hover:brightness-110
+                  cursor-pointer
+                "
+              >
+                <Compass className="w-14 h-14 text-white" />
+              </div>
+            </div>
+            {/* Text Column */}
+            <div className="flex flex-col text-center md:text-left space-y-4 md:space-y-6">
+              <h2 className="text-4xl font-extrabold text-gray-800">
+                Our Values
+              </h2>
+              <ul className="text-gray-700 text-lg leading-relaxed space-y-4 mt-4">
+                <li>
+                  <strong className="font-semibold">Innovation:</strong> Constantly
+                  pushing the boundaries of what's possible with AI.
+                </li>
+                <li>
+                  <strong className="font-semibold">Ethical Development:</strong> Ensuring
+                  our AI solutions are responsible and beneficial to society.
+                </li>
+                <li>
+                  <strong className="font-semibold">Collaboration:</strong> Fostering
+                  partnerships and knowledge sharing within the AI community.
+                </li>
+                <li>
+                  <strong className="font-semibold">Transparency:</strong> Being open about
+                  our processes and the capabilities of our AI.
+                </li>
+                <li>
+                  <strong className="font-semibold">Continuous Learning:</strong> Embracing
+                  a culture of perpetual growth and improvement.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Vision Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 items-center gap-8">
+            {/* Text Column */}
+            <div className="order-2 md:order-1 flex flex-col text-center md:text-left space-y-4 md:space-y-6">
+              <h2 className="text-4xl font-extrabold text-white">
+                Our Vision
+              </h2>
+              <p className="text-lg text-gray-200 leading-relaxed">
+                To be the global leader in AI-driven solutions, shaping a future where human
+                potential is amplified by intelligent technologies. We envision a world
+                where AI seamlessly integrates into every aspect of life, enhancing
+                decision-making, creativity, and problem-solving capabilities. Our goal is
+                to create a more efficient, sustainable, and innovative world, where the
+                synergy between human ingenuity and artificial intelligence leads to
+                unprecedented advancements for the betterment of humanity.
+              </p>
+            </div>
+            {/* Icon Column */}
+            <div className="order-1 md:order-2 flex justify-center md:justify-end">
+              <div
+                className="
+                  rounded-full
+                  p-6
+                  bg-gradient-to-tr
+                  from-green-600
+                  via-green-400
+                  to-green-500
+                  shadow-lg
+                  transition
+                  duration-300
+                  transform
+                  hover:scale-105
+                  hover:brightness-110
+                  cursor-pointer
+                "
+              >
+                <Eye className="w-14 h-14 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Partners Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
