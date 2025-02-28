@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-green-800 py-24">
+      <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-green-800 py-24 pt-[150px]">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -rotate-45 -right-20 top-20 w-96 h-96 bg-green-700/20 rounded-full blur-3xl"></div>
           <div className="absolute rotate-12 -left-20 bottom-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
@@ -18,10 +18,10 @@ export default function Home() {
               Transforming Ideas into Intelligent Solutions
             </h1>
             <p className="text-xl text-gray-200 mb-8">
-              At Cogniverse, we bridge the gap between human creativity and artificial intelligence, 
+              At Cogniverse, we bridge the gap between human creativity and artificial intelligence,
               creating solutions that shape the future of technology.
             </p>
-            <Link 
+            <Link
               href="/contact"
               className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
             >
@@ -39,7 +39,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-4xl font-bold text-blue-900 mb-6">Our Mission</h2>
             <p className="text-lg text-gray-700">
-              We strive to create innovative AI solutions that empower businesses 
+              We strive to create innovative AI solutions that empower businesses
               and individuals to achieve their full potential in the digital age.
             </p>
           </div>
