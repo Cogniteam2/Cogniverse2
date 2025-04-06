@@ -39,7 +39,9 @@ export default function Google() {
 
         {/* Contact Content */}
         <div className="container mx-auto px-6 relative z-10">
-          <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
+          <h1 className="text-4xl font-bold text-white mb-4 pt-4">
+            Contact Us
+          </h1>
           <p className="text-gray-200">Get in touch with our team</p>
         </div>
       </section>

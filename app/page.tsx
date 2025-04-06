@@ -1,9 +1,11 @@
 "use client";
 
-import { ArrowRight, Brain, Building, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import ScrollVid from "./ScrollVid";
-
+import Mission from "./landing_components/mission";
+import Values from "./landing_components/values";
+import Vision from "./landing_components/vision";
 export default function Home() {
   return (
     <main className="min-h-screen">
@@ -40,62 +42,18 @@ export default function Home() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-green-50 via-white to-white"></div>
-        <div className="container mx-auto px-6 relative">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-4xl font-bold text-blue-900 mb-6">
-              Our Mission
-            </h2>
-            <p className="text-lg text-gray-700">
-              We strive to create innovative AI solutions that empower
-              businesses and individuals to achieve their full potential in the
-              digital age.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                <Brain className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                Innovation First
-              </h3>
-              <p className="text-gray-600">
-                Pushing the boundaries of what's possible with AI technology.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                Human-Centered
-              </h3>
-              <p className="text-gray-600">
-                Creating solutions that enhance human capabilities, not replace
-                them.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                <Building className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                Sustainable Growth
-              </h3>
-              <p className="text-gray-600">
-                Building solutions that scale with your business needs.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Mission />
+
+      {/* Values Section */}
+      <Values />
+
+      {/* Vision Section */}
+      <Vision />
 
       {/* Partners Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-blue-900 text-center mb-16">
+          <h2 className="text-4xl font-bold text-[#00a8c9] text-center mb-16">
             Our Partners
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
