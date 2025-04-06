@@ -9,7 +9,7 @@ export default function Header() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   return (
-    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-purple-800/70 backdrop-blur-md shadow-lg rounded-2xl px-6 py-3 z-50 w-[90%] max-w-4xl">
+    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#00a8c9] via-[#24ccff] to-[#24ffe9] backdrop-blur-md shadow-lg rounded-2xl px-6 py-3 z-50 w-[90%] max-w-4xl">
       <nav className="flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-white">
           CogniVerse
@@ -17,36 +17,42 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-          <Link href="/" className="text-gray-200 hover:text-white">Home</Link>
+          <Link
+            href="/"
+            className="text-gray-200 hover:text-white font-semibold"
+          >
+            Home
+          </Link>
 
           {/* About Us Dropdown */}
           <div className="relative" onMouseLeave={() => setIsAboutOpen(false)}>
             <button
               onClick={() => setIsAboutOpen(!isAboutOpen)}
-              className="flex items-center text-gray-200 hover:text-white"
+              className="flex items-center text-gray-200 hover:text-white font-semibold"
             >
               About Us
               <ChevronDown
-                className={`ml-1 h-4 w-4 transition-transform ${isAboutOpen ? "rotate-180" : ""
-                  }`}
+                className={`ml-1 h-4 w-4 transition-transform ${
+                  isAboutOpen ? "rotate-180" : ""
+                }`}
               />
             </button>
 
             {isAboutOpen && (
               <div
-                className="absolute top-full left-0 w-48 bg-purple-900/90 backdrop-blur-md rounded-xl shadow-lg py-2"
+                className="absolute top-full left-0 w-48 bg-gradient-to-br from-[#00a8c9] via-[#24ccff] to-[#24ffe9] backdrop-blur-md rounded-xl shadow-lg py-2"
                 onMouseEnter={() => setIsAboutOpen(true)}
                 onMouseLeave={() => setIsAboutOpen(false)}
               >
                 <Link
                   href="/about_us/team"
-                  className="block px-4 py-2 text-gray-200 hover:bg-purple-800/50 hover:text-white"
+                  className="block px-4 py-2 text-gray-200 hover:bg-[#00a8c9] hover:text-white font-semibold"
                 >
                   Team
                 </Link>
                 <Link
                   href="/about_us/technology"
-                  className="block px-4 py-2 text-gray-200 hover:bg-purple-800/50 hover:text-white"
+                  className="block px-4 py-2 text-gray-200 hover:bg-[#00a8c9] hover:text-white font-semibold"
                 >
                   How We Work
                 </Link>
@@ -54,18 +60,26 @@ export default function Header() {
             )}
           </div>
 
-          <Link href="/blog" className="text-gray-200 hover:text-white">
+          {/* <Link
+            href="/blog"
+            className="text-gray-200 hover:text-white font-semibold"
+          >
             Blog
-          </Link>
-          <Link href="/contact" className="text-gray-200 hover:text-white">
+          </Link> */}
+          <Link
+            href="/contact"
+            className="text-gray-200 hover:text-white font-semibold"
+          >
             Contact
           </Link>
-          <Link
+
+          {/* <Link
             href="/contact"
             className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
           >
             Get Started
-          </Link>
+          </Link> 
+          Redundant*/}
         </div>
 
         {/* Mobile Menu Button */}
@@ -100,8 +114,9 @@ export default function Header() {
             >
               About Us
               <ChevronDown
-                className={`ml-1 h-4 w-4 transition-transform ${isAboutOpen ? "rotate-180" : ""
-                  }`}
+                className={`ml-1 h-4 w-4 transition-transform ${
+                  isAboutOpen ? "rotate-180" : ""
+                }`}
               />
             </button>
 
