@@ -8,7 +8,7 @@ const Mission = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-green-50 via-white to-white"></div>
         <div className="container mx-auto px-6 relative">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">
+            <h2 className="text-6xl font-bold text-gray-800 mb-6">
               Our Mission
             </h2>
             <p className="text-lg text-gray-700">

@@ -37,7 +37,7 @@ const ValuesTimeline = () => {
   return (
     <section className="bg-white py-24 px-8">
       <div className="text-center pb-12">
-        <h2 className="text-4xl font-bold text-gray-800 mb-6">Our Values</h2>
+        <h2 className="text-6xl font-bold text-gray-800 mb-6">Our Values</h2>
       </div>
       <div className="flex flex-col sm:flex-row sm:justify-between gap-16 sm:gap-6 max-w-7xl mx-auto relative">
         {/* Horizontal line for sm+ */}
@@ -60,7 +60,7 @@ const ValuesTimeline = () => {
 
             {/* Text */}
             <div className="ml-6 sm:ml-0">
-              <h3 className="text-lg font-semibold text-cyan-500">
+              <h3 className="text-xl font-semibold text-cyan-500">
                 {value.title}
               </h3>
               <p className="text-base text-gray-700 mt-2 max-w-sm">

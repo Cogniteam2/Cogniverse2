@@ -49,25 +49,6 @@ export default function Home() {
 
       {/* Vision Section */}
       <Vision />
-
-      {/* Partners Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-[#00a8c9] text-center mb-16">
-            Our Partners
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow"
-              >
-                <div className="aspect-[3/2] bg-gray-200 rounded-lg"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

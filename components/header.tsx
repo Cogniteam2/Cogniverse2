@@ -9,7 +9,7 @@ export default function Header() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   return (
-    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#00a8c9]/75 via-[#24ccff]/75 to-[#24ffe9]/75 backdrop-blur-md shadow-lg rounded-2xl px-6 py-3 z-50 w-[90%] max-w-4xl">
+    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#24ffe9]/75 via-[#24ccff]/75 to-[#00a8c9]/75 backdrop-blur-md shadow-lg rounded-2xl px-6 py-3 z-50 w-[90%] max-w-4xl">
       <nav className="flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-white">
           CogniVerse
