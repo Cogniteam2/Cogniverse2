@@ -118,28 +118,32 @@ export default function Google() {
                 </h2>
                 <div className="space-y-6">
                   <div className="flex items-start">
-                    <MapPin className="h-6 w-6 text-[#24ffe9]/75 mt-1" />
+                    <MapPin className="h-6 w-6 text-[#28A0E3]/75 mt-1" />
                     <div className="ml-4">
                       <h3 className="font-medium text-gray-900">Address</h3>
                       <p className="text-gray-600">
-                        123 Innovation Street
+                        Cogniverse Limited , UCL BaseKX
                         <br />
-                        Tech City, TC 12345
+                        103c Camley St, London N1C 4PF
+                        <br />
+                        United Kingdom
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start">
-                    <Phone className="h-6 w-6 text-[#24ffe9]/75 mt-1" />
+                    <Phone className="h-6 w-6 text-[#28A0E3]/75 mt-1" />
                     <div className="ml-4">
                       <h3 className="font-medium text-gray-900">Phone</h3>
-                      <p className="text-gray-600">+1 (555) 123-4567</p>
+                      <p className="text-gray-600">+44 (0) 7436194150</p>
                     </div>
                   </div>
                   <div className="flex items-start">
-                    <Mail className="h-6 w-6 text-[#24ffe9]/75 mt-1" />
+                    <Mail className="h-6 w-6 text-[#28A0E3]/75 mt-1" />
                     <div className="ml-4">
                       <h3 className="font-medium text-gray-900">Email</h3>
-                      <p className="text-gray-600">contact@cogniverse.com</p>
+                      <p className="text-gray-600">
+                        founders@cogniversetech.com
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -147,7 +151,7 @@ export default function Google() {
                 <div className="mt-8 bg-white rounded-xl shadow-lg p-8">
                   <div className="relative w-full aspect-[4/3] bg-gray-200 rounded-lg overflow-hidden">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0410799818246!2d79.15335867470691!3d12.969223187345918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad479f0ccbe067%3A0xfef222e5f36ecdeb!2sVellore%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1743920741477!5m2!1sen!2sin"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2481.6390404362337!2d-0.1335149233780754!3d51.53818007182023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b1211143701%3A0xc62e9c6ac89784a1!2sUCL%20BaseKX!5e0!3m2!1sen!2sin!4v1747737532873!5m2!1sen!2sin"
                       className="absolute top-0 left-0 w-full h-full border-0 rounded-lg"
                       loading="lazy"
                       allowFullScreen
