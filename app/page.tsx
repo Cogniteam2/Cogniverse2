@@ -4,10 +4,10 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import ScrollVid from "./ScrollVid";
 import Mission from "./landing_components/mission";
-// import Values from "./landing_components/values";
 import OurValues from "./landing_components/values_v2";
 import OurPartners from "./landing_components/partners";
 import Solutions from "./landing_components/solutions";
+
 export default function Home() {
   return (
     <main className="min-h-screen">

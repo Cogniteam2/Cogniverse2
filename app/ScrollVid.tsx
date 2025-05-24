@@ -10,51 +10,77 @@ const Model: React.FC = () => {
   return <primitive object={scene} scale={1.5} />;
 };
 
-// Updated camera path positions with more stages between 89-100%
-const createCameraPath = (numPoints = 150) => {
+// Improved camera path with controlled rotation and direct lens approach
+const createCameraPath = (numPoints = 120) => {
+  // Reduced points for faster progression
   const path = [];
-  const radius = 3.6; // Reduced from 4 to bring camera closer to model
+  const radius = 3.6;
   const initialHeight = 0.5;
-  const finalHeight = 0.2;
+  const finalHeight = -0.1; // Lower final height to see lens area better
 
-  const lensTarget: [number, number, number] = [0, 0.1, -0.3]; // Explicitly typed as tuple
+  const lensTarget: [number, number, number] = [0, 0, -0.3];
 
   for (let i = 0; i < numPoints; i++) {
     const progress = i / (numPoints - 1);
-    const angle = progress * Math.PI;
+
+    // Control rotation to stop at 180 degrees and transition to direct approach
+    let angle;
+    if (progress <= 0.7) {
+      // Complete 180-degree rotation by 70% progress
+      angle = (progress / 0.7) * Math.PI;
+    } else {
+      // Stop rotation at 180 degrees (Math.PI)
+      angle = Math.PI;
+    }
+
     const y = initialHeight * (1 - progress) + finalHeight * progress;
 
     let adjustedRadius = radius;
 
-    // Modified movement stages for smoother progression
-    if (progress > 0.7 && progress <= 0.85) {
-      const zoomProgress = (progress - 0.7) / 0.15;
-      adjustedRadius = radius * (1 - zoomProgress * 0.3);
-    } else if (progress > 0.85 && progress <= 0.89) {
-      const extraZoomProgress = (progress - 0.85) / 0.04;
-      adjustedRadius = radius * (0.7 - extraZoomProgress * 0.2);
-    } else if (progress > 0.89 && progress <= 0.93) {
-      const fineZoomProgress = (progress - 0.89) / 0.04;
-      adjustedRadius = radius * (0.5 - fineZoomProgress * 0.15);
-    } else if (progress > 0.93 && progress <= 0.97) {
-      const microZoomProgress = (progress - 0.93) / 0.04;
-      adjustedRadius = radius * (0.35 - microZoomProgress * 0.15);
-    } else if (progress > 0.97) {
-      const finalZoomProgress = (progress - 0.97) / 0.03;
-      adjustedRadius = radius * (0.2 - finalZoomProgress * 0.1);
+    // Revised zoom stages for smoother and faster progression
+    if (progress > 0.6 && progress <= 0.75) {
+      // Start zooming earlier
+      const zoomProgress = (progress - 0.6) / 0.15;
+      adjustedRadius = radius * (1 - zoomProgress * 0.4); // More aggressive zoom
+    } else if (progress > 0.75 && progress <= 0.85) {
+      const extraZoomProgress = (progress - 0.75) / 0.1;
+      adjustedRadius = radius * (0.6 - extraZoomProgress * 0.25);
+    } else if (progress > 0.85 && progress <= 0.92) {
+      const fineZoomProgress = (progress - 0.85) / 0.07;
+      adjustedRadius = radius * (0.35 - fineZoomProgress * 0.2);
+    } else if (progress > 0.92) {
+      const finalZoomProgress = (progress - 0.92) / 0.08;
+      adjustedRadius = radius * (0.15 - finalZoomProgress * 0.12);
     }
 
-    let position: [number, number, number] = [
-      Math.sin(angle) * adjustedRadius,
-      y,
-      Math.cos(angle) * adjustedRadius,
-    ];
-
+    let position: [number, number, number];
     let lookAt: [number, number, number] = [0, y, 0];
 
-    if (progress >= 0.98) {
-      position = [0, 0.1, -0.2]; // Move to the exact lens position, slightly closer than before
-      lookAt = lensTarget;
+    if (progress <= 0.7) {
+      // Normal circular rotation
+      position = [
+        Math.sin(angle) * adjustedRadius,
+        y,
+        Math.cos(angle) * adjustedRadius,
+      ];
+    } else if (progress > 0.7 && progress < 0.95) {
+      // Transition from back of headset to direct lens approach
+      const transitionProgress = (progress - 0.7) / 0.25;
+      const backPosition = [0, y, -adjustedRadius]; // Back of headset
+      const lensPosition = [0, -0.05, -0.15]; // Final lens position
+
+      position = [
+        backPosition[0] * (1 - transitionProgress) +
+          lensPosition[0] * transitionProgress,
+        backPosition[1] * (1 - transitionProgress) +
+          lensPosition[1] * transitionProgress,
+        backPosition[2] * (1 - transitionProgress) +
+          lensPosition[2] * transitionProgress,
+      ];
+    } else {
+      // Final lens positioning - lower and more centered
+      position = [0, -0.05, -0.15]; // Lower position to see lens area better
+      lookAt = [0, 0, -0.3]; // Look directly at lens
     }
 
     path.push({ position, lookAt });
@@ -63,62 +89,56 @@ const createCameraPath = (numPoints = 150) => {
   return path;
 };
 
-// Enhanced camera controller with smooth interpolation
+// Improved camera controller with faster correction
 const SmoothCameraController = ({ progress }: { progress: number }) => {
   const { camera } = useThree();
   const cameraPath = useRef(createCameraPath());
   const prevProgress = useRef(progress);
-  const lerpFactor = useRef(0.08); // Increased from 0.05 for faster transitions
+  const lerpFactor = useRef(0.12); // Increased base lerp factor for faster correction
 
   useFrame(() => {
-    // Smooth the progress value to reduce jerkiness
-    prevProgress.current += (progress - prevProgress.current) * 0.15; // Increased from 0.1 for quicker progress update
+    // Faster progress smoothing for quicker response
+    prevProgress.current += (progress - prevProgress.current) * 0.2; // Increased from 0.15
     const smoothProgress = prevProgress.current;
 
-    // Get the exact position in our path
     const exactIndex = smoothProgress * (cameraPath.current.length - 1);
     const index = Math.floor(exactIndex);
     const nextIndex = Math.min(index + 1, cameraPath.current.length - 1);
-    const t = exactIndex - index; // Interpolation factor between points
+    const t = exactIndex - index;
 
-    // Get current and next path points
     const currentPoint = cameraPath.current[index];
     const nextPoint = cameraPath.current[nextIndex];
 
-    // Target position (where we want the camera to go)
     const targetPosition = new THREE.Vector3(
       currentPoint.position[0] * (1 - t) + nextPoint.position[0] * t,
       currentPoint.position[1] * (1 - t) + nextPoint.position[1] * t,
       currentPoint.position[2] * (1 - t) + nextPoint.position[2] * t
     );
 
-    // Target lookAt (where we want the camera to look)
     const targetLookAt = new THREE.Vector3(
       currentPoint.lookAt[0] * (1 - t) + nextPoint.lookAt[0] * t,
       currentPoint.lookAt[1] * (1 - t) + nextPoint.lookAt[1] * t,
       currentPoint.lookAt[2] * (1 - t) + nextPoint.lookAt[2] * t
     );
 
-    // Variable smoothing based on progress - increased values for faster correction
-    if (progress > 0.85 && progress <= 0.93) {
-      lerpFactor.current = 0.09; // Increased from 0.06
-    } else if (progress > 0.93) {
-      lerpFactor.current = 0.07; // Increased from 0.04
+    // Much faster correction based on progress - more aggressive lerp factors
+    if (progress > 0.85 && progress <= 0.92) {
+      lerpFactor.current = 0.15; // Faster correction in zoom phase
+    } else if (progress > 0.92) {
+      lerpFactor.current = 0.18; // Even faster for final positioning
     } else {
-      // Normal adaptive smoothing for the rest of the animation
+      // More responsive correction throughout
       const progressDelta = Math.abs(progress - prevProgress.current);
-      lerpFactor.current = 0.08 + progressDelta * 2.5; // Increased base value and multiplier
+      lerpFactor.current = 0.12 + progressDelta * 4; // Higher base and multiplier
     }
 
-    // Smoothly interpolate camera position (LERP)
+    // Faster camera position correction
     camera.position.lerp(targetPosition, lerpFactor.current);
 
-    // Create a temporary vector for the current lookAt
     const currentLookAt = new THREE.Vector3();
     camera.getWorldDirection(currentLookAt);
     currentLookAt.multiplyScalar(5).add(camera.position);
 
-    // Smoothly adjust lookAt
     const smoothLookAt = new THREE.Vector3()
       .copy(currentLookAt)
       .lerp(targetLookAt, lerpFactor.current);
@@ -128,71 +148,79 @@ const SmoothCameraController = ({ progress }: { progress: number }) => {
   return null;
 };
 
-// Main Model Viewer with Pulse Effect & Video Transition
+// Main Model Viewer with improved transitions
 export default function ScrollVid() {
   const [progress, setProgress] = useState(0);
   const [scrollLocked, setScrollLocked] = useState(true);
   const [lightIntensity, setLightIntensity] = useState(0.5);
   const [showVideo, setShowVideo] = useState(false);
-  const [pulseEffect, setPulseEffect] = useState(false);
-  const [pulseOpacity, setPulseOpacity] = useState(0);
   const [showIntroSlide, setShowIntroSlide] = useState(true);
   const [introSlideOpacity, setIntroSlideOpacity] = useState(1);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [fadeTransition, setFadeTransition] = useState(false);
+  const [fadeOpacity, setFadeOpacity] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastScrollTime = useRef(Date.now());
   const scrollInertia = useRef(0);
-  const pulseAnimationRef = useRef<number | null>(null);
+  const fadeAnimationRef = useRef<number | null>(null);
   const introFadeAnimationRef = useRef<number | null>(null);
-  const canAdvanceProgress = useRef(false); // Track whether we can start advancing progress
+  const canAdvanceProgress = useRef(false);
 
-  // Handle pulse animation
+  // Handle black fade transition with direct model-to-video transition
   useEffect(() => {
-    if (pulseEffect) {
+    if (fadeTransition) {
       let startTime = Date.now();
-      let duration = 600; // Duration of pulse in ms
+      let duration = 1000; // Reduced duration (1 second total)
 
-      const animatePulse = () => {
+      const animateFade = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        // Create a pulse effect using sine wave
-        if (progress < 1) {
-          const pulseValue = Math.sin(progress * Math.PI * 3) * 0.5 + 0.5;
-          setPulseOpacity(pulseValue);
-          pulseAnimationRef.current = requestAnimationFrame(animatePulse);
+        if (progress < 0.5) {
+          // Fade to black from model
+          setFadeOpacity(progress * 2);
+          fadeAnimationRef.current = requestAnimationFrame(animateFade);
+        } else if (progress === 0.5 || (progress > 0.5 && !showVideo)) {
+          // At midpoint, switch to video immediately
+          setFadeOpacity(1);
+          if (!showVideo) {
+            setShowVideo(true);
+            // Attempt to play video
+            setTimeout(() => {
+              if (videoRef.current) {
+                videoRef.current
+                  .play()
+                  .catch((err) => console.error("Video play failed:", err));
+              }
+            }, 50);
+          }
+          fadeAnimationRef.current = requestAnimationFrame(animateFade);
+        } else if (progress < 1) {
+          // Fade from black to video
+          const fadeOutProgress = (progress - 0.5) / 0.5;
+          setFadeOpacity(1 - fadeOutProgress);
+          fadeAnimationRef.current = requestAnimationFrame(animateFade);
         } else {
-          setPulseOpacity(0);
-          setPulseEffect(false);
-          // Show video after pulse completes
-          setShowVideo(true);
-
-          // Attempt to play video
-          setTimeout(() => {
-            if (videoRef.current) {
-              videoRef.current
-                .play()
-                .catch((err) => console.error("Video play failed:", err));
-            }
-          }, 100);
+          setFadeOpacity(0);
+          setFadeTransition(false);
         }
       };
 
-      pulseAnimationRef.current = requestAnimationFrame(animatePulse);
+      fadeAnimationRef.current = requestAnimationFrame(animateFade);
 
       return () => {
-        if (pulseAnimationRef.current) {
-          cancelAnimationFrame(pulseAnimationRef.current);
+        if (fadeAnimationRef.current) {
+          cancelAnimationFrame(fadeAnimationRef.current);
         }
       };
     }
-  }, [pulseEffect]);
+  }, [fadeTransition, showVideo]);
 
   // Handle intro slide fade animation
   useEffect(() => {
     if (hasScrolled && showIntroSlide) {
       let startTime = Date.now();
-      let duration = 500; // Duration of fade in ms
+      let duration = 500;
 
       const animateIntroFade = () => {
         const elapsed = Date.now() - startTime;
@@ -205,7 +233,7 @@ export default function ScrollVid() {
         } else {
           setIntroSlideOpacity(0);
           setShowIntroSlide(false);
-          canAdvanceProgress.current = true; // Allow progress to advance once intro is gone
+          canAdvanceProgress.current = true;
         }
       };
 
@@ -219,17 +247,15 @@ export default function ScrollVid() {
     }
   }, [hasScrolled, showIntroSlide]);
 
-  // Effect to ensure scrolling works after intro slide is removed
   useEffect(() => {
     if (!showIntroSlide) {
       canAdvanceProgress.current = true;
     }
   }, [showIntroSlide]);
 
-  // Enhanced scroll handling with inertia
+  // Enhanced scroll handling with faster response
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
-      // Mark that scrolling has begun - used for intro slide
       if (!hasScrolled) {
         setHasScrolled(true);
       }
@@ -237,24 +263,22 @@ export default function ScrollVid() {
       if (scrollLocked) {
         event.preventDefault();
 
-        // Calculate time since last scroll
         const now = Date.now();
         const timeDelta = now - lastScrollTime.current;
         lastScrollTime.current = now;
 
-        // Apply scroll inertia - reduced sensitivity for less dramatic initial movement
-        const scrollInput = event.deltaY * 0.00025; // Reduced from 0.0003
+        // Increased scroll sensitivity for faster rotation
+        const scrollInput = event.deltaY * 0.0004; // Increased from 0.00025
         scrollInertia.current =
           Math.sign(scrollInput) *
-          Math.min(Math.abs(scrollInertia.current + scrollInput), 0.008); // Reduced max inertia from 0.01
+          Math.min(Math.abs(scrollInertia.current + scrollInput), 0.012); // Increased max
 
-        // Apply stronger dampening over time
-        if (timeDelta > 50) {
-          // Reduced from 100 for quicker reaction
-          scrollInertia.current *= 0.7; // Increased dampening from 0.8
+        // Faster inertia decay
+        if (timeDelta > 40) {
+          // Reduced from 50
+          scrollInertia.current *= 0.75; // Increased dampening from 0.7
         }
 
-        // Only advance progress if intro is complete
         if (canAdvanceProgress.current) {
           setProgress((prev) => {
             const newProgress = Math.min(
@@ -262,15 +286,13 @@ export default function ScrollVid() {
               Math.max(0, prev + scrollInertia.current)
             );
 
-            // Increase brightness as we scroll, with extra boost during final zoom
             const extraLightBoost =
               newProgress > 0.85 ? (newProgress - 0.85) * 2 : 0;
             setLightIntensity(0.5 + newProgress * 1.5 + extraLightBoost);
 
-            // Check if we've reached the end of the scroll
-            if (newProgress >= 0.99 && !pulseEffect && !showVideo) {
-              // Trigger pulse effect as transition
-              setPulseEffect(true);
+            // Trigger fade transition instead of pulse
+            if (newProgress >= 0.98 && !fadeTransition && !showVideo) {
+              setFadeTransition(true);
               setScrollLocked(false);
             }
 
@@ -280,13 +302,11 @@ export default function ScrollVid() {
       }
     };
 
-    // Apply inertia for smoother scrolling - with faster decay
+    // Faster inertia application
     const applyInertia = () => {
       if (Math.abs(scrollInertia.current) > 0.0001 && scrollLocked) {
-        // Faster inertia decay for quicker correction
-        scrollInertia.current *= 0.88; // Changed from 0.93 for faster decay
+        scrollInertia.current *= 0.9; // Faster decay from 0.88
 
-        // Only advance progress if intro is complete
         if (canAdvanceProgress.current) {
           setProgress((prev) => {
             const newProgress = Math.min(
@@ -294,15 +314,12 @@ export default function ScrollVid() {
               Math.max(0, prev + scrollInertia.current)
             );
 
-            // Update light intensity with extra boost during final zoom
             const extraLightBoost =
               newProgress > 0.85 ? (newProgress - 0.85) * 2 : 0;
             setLightIntensity(0.5 + newProgress * 1.5 + extraLightBoost);
 
-            // Check if we've reached the end
-            if (newProgress >= 0.99 && !pulseEffect && !showVideo) {
-              // Create pulse effect
-              setPulseEffect(true);
+            if (newProgress >= 0.98 && !fadeTransition && !showVideo) {
+              setFadeTransition(true);
               setScrollLocked(false);
             }
 
@@ -321,14 +338,14 @@ export default function ScrollVid() {
       window.removeEventListener("wheel", handleScroll);
       cancelAnimationFrame(inertiaFrame);
     };
-  }, [scrollLocked, pulseEffect, showVideo, hasScrolled, showIntroSlide]);
+  }, [scrollLocked, fadeTransition, showVideo, hasScrolled, showIntroSlide]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {/* 3D Canvas Scene */}
       {!showVideo && (
         <Canvas
-          camera={{ position: [0, 0.5, 3.6], fov: 65 }} // Starting position closer to headset
+          camera={{ position: [0, 0.5, 3.6], fov: 65 }}
           className="fixed top-0 left-0 w-full h-full"
         >
           <ambientLight intensity={lightIntensity} />
@@ -348,17 +365,11 @@ export default function ScrollVid() {
           className="absolute inset-0 flex flex-col justify-center items-center bg-gray-800 z-30 overflow-hidden"
           style={{ opacity: introSlideOpacity, transition: "opacity 0.5s" }}
         >
-          {/* Bloom effect - top right */}
           <div className="absolute -rotate-45 -right-20 top-20 w-96 h-96 bg-[#24ffe9]/20 rounded-full blur-3xl"></div>
-
-          {/* Bloom effect - bottom left */}
           <div className="absolute rotate-12 -left-20 bottom-20 w-96 h-96 bg-[#00a8c9]/20 rounded-full blur-3xl"></div>
-
-          {/* Additional complementary bloom effects for more immersive feel */}
           <div className="absolute rotate-45 left-40 top-20 w-64 h-64 bg-[#4f46e5]/15 rounded-full blur-3xl"></div>
           <div className="absolute -rotate-12 right-40 bottom-20 w-80 h-80 bg-[#a855f7]/15 rounded-full blur-3xl"></div>
 
-          {/* Content */}
           <h1 className="text-5xl font-bold text-white mb-6 z-10 relative">
             Enter the world of VR
           </h1>
@@ -381,10 +392,10 @@ export default function ScrollVid() {
         </div>
       )}
 
-      {/* Pulse Effect Overlay for transition */}
+      {/* Black Fade Transition Overlay */}
       <div
-        className="absolute inset-0 bg-white transition-opacity duration-100 z-20"
-        style={{ opacity: pulseOpacity }}
+        className="absolute inset-0 bg-black transition-opacity duration-100 z-20"
+        style={{ opacity: fadeOpacity }}
       ></div>
 
       {/* Video that replaces 3D model at the end */}

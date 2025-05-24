@@ -16,7 +16,7 @@ const FEATURES = [
     description:
       "Access calming, intelligent virtual worlds tailored to the emotional and sensory needs of autistic and ADHD children. Cogniverse integrates the Halara platform to extend care beyond clinics.",
     icon: UserCheck,
-    image: "/halara.png", // Replace with your actual image path
+    image: "/hala-1.jpg",
     bg: "bg-cyan-50",
     span: "md:row-span-2",
   },
@@ -76,12 +76,12 @@ const Solutions = () => {
                 <img
                   src={feature.image}
                   alt={feature.title}
-                  className="w-56 h-56 object-cover rounded-xl mt-4 mb-4"
+                  className="w-auto h-auto object-cover rounded-xl mt-4 mb-4 p-10"
                 />
               )}
 
               <p
-                className={`text-sm text-gray-700 leading-relaxed ${
+                className={`text-md text-gray-700 leading-relaxed ${
                   feature.compactText ? "mt-2" : "mt-4"
                 }`}
               >
