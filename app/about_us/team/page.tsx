@@ -1,91 +1,88 @@
 "use client";
 
-export default function TeamPage() {
+import React from "react";
+import Header from "../../../components/header";
+import { ChevronRight } from "lucide-react";
+
+export default function Partners() {
     return (
-        <div className="bg-gray-50 text-gray-800">
-            {/* Hero Section */}
-            <section className="relative bg-purple-100 text-purple-800 pt-[150px] pb-20 ">
-                <div className="max-w-7xl mx-auto px-6 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold">Founding Team</h1>
-                    <p className="mt-4 text-lg md:text-xl">
-                        Meet the innovators behind CogniVerse – a team of accomplished professionals redefining medical education through cutting-edge VR technology.
-                    </p>
+        <div className="min-h-screen bg-white">
+            <Header />    
+
+            <section className="relative bg-gradient-to-br from-[#28A0E3] to-[#07ECC6] text-white pt-24 pb-28 px-4 sm:px-6 lg:px-8 -mt-16">
+                <div className="max-w-7xl mx-auto relative z-10 pt-16">
+                    <div className="max-w-3xl space-y-6">
+                        <div className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
+                            Strategic Partnerships
+                        </div>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                            Built With and Backed By <span className="text-[#FFEE58]">Leaders</span> in Healthcare
+                        </h1>
+                        <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
+                            Collaborating with institutions at the forefront of medical innovation and education.
+                        </p>
+                    </div>
                 </div>
+                <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-white/10 to-transparent"></div>
+                <div className="absolute bottom-10 left-10 w-24 h-24 rounded-full bg-[#FFEE58]/20 blur-xl"></div>
             </section>
 
-            {/* Founding Team Section */}
-            <section className="py-16 bg-white">
-                <div className="max-w-7xl mx-auto px-6">
-                    <h2 className="text-3xl font-bold text-purple-800 text-center">Our Board</h2>
-                    <p className="mt-4 text-lg text-gray-700 text-center">
-                        At CogniVerse, we are dedicated to transforming medical education through innovation, expertise, and collaboration.
-                    </p>
+            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-16">
+                        <span className="text-3xl md:text-xl font-semibold text-[#28A0E3] mb-2 block">
+                            Our Network
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                            Trusted By <span className="text-[#07ECC6]">Leading Institutions</span>
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                            We partner with world-class institutions to ensure our technology delivers measurable results in real settings.
+                        </p>
+                    </div>
 
-                    {/* Team Members Grid */}
-                    <div className="mt-12 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-                        {[
-                            {
-                                name: "Raghul Senthilnathan",
-                                title: "Chief Executive Officer",
-                                description:
-                                    "A biotechnology entrepreneur and visionary leader, pioneering immersive technology in medical training.",
-                            },
-                            {
-                                name: "Dr. Lakshmi Divya Alahari",
-                                title: "Director of Clinical Development",
-                                description:
-                                    "A global healthcare innovator redefining medical training with immersive VR simulations.",
-                            },
-                            {
-                                name: "Adharsh Gajendran",
-                                title: "Director of Technology",
-                                description:
-                                    "A pioneer in XR development, leading advancements in VR-based medical training simulations.",
-                            },
-                            {
-                                name: "Ranjith Kumar Velassamy",
-                                title: "Director of Business Development",
-                                description:
-                                    "A strategic leader bridging technological innovation and real-world healthcare implementation.",
-                            },
-                            {
-                                name: "Anant R. Joshi",
-                                title: "Director of Business Growth & Finance",
-                                description:
-                                    "A seasoned industry expert driving financial growth and global expansion for CogniVerse.",
-                            },
-                        ].map((member, index) => (
-                            <div
-                                key={index}
-                                className="bg-gray-100 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-                            >
-                                {/* Placeholder Image */}
-                                <div className="w-full h-48 bg-gray-300 rounded-lg mb-4 flex items-center justify-center">
-                                    <span className="text-gray-500">Image Placeholder</span>
-                                </div>
-                                {/* Member Details */}
-                                <h3 className="text-xl font-bold text-purple-800">{member.name}</h3>
-                                <p className="text-sm font-semibold text-gray-600">{member.title}</p>
-                                <p className="mt-2 text-gray-700">{member.description}</p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-center">
+                        <div className="bg-gray-50 p-8 rounded-xl flex items-center justify-center h-40">
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-[#28A0E3] mb-2">UCLH</div>
+                                <p className="text-gray-600 text-sm">University College London Hospitals</p>
                             </div>
-                        ))}
+                        </div>
+
+                        <div className="bg-gray-50 p-8 rounded-xl flex items-center justify-center h-40">
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-[#07ECC6] mb-2">UCL</div>
+                                <p className="text-gray-600 text-sm">Innovation & Enterprise</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
 
-            {/* Call to Action Section */}
-            <section className="py-16 bg-purple-100 text-purple-800">
-                <div className="max-w-7xl mx-auto px-6 text-center">
-                    <h2 className="text-3xl font-bold">Contact & Partnerships</h2>
-                    <p className="mt-4 text-lg">
-                        Looking to integrate VR training into your institution? Interested in partnerships, investment, or collaboration? Let’s connect.
+            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#07ECC6]/10 to-[#28A0E3]/10">
+                <div className="max-w-4xl mx-auto text-center">
+                    <h2 className="text-2xl md:text-xl font-semibold text-[#07ECC6] mb-4">
+                        Get Started
+                    </h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                        Let's Shape the Future of <span className="text-[#28A0E3]">Healthcare Training</span> Together
+                    </h2>
+                    <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                        We're ready to collaborate with hospitals, universities, and healthcare innovators to build tailored VR solutions that improve training, reduce risk, and support better care.
                     </p>
-                    <a
-                        href="/contact"
-                        className="inline-block mt-6 px-8 py-3 bg-orange-500 hover:bg-orange-600 rounded-lg text-white font-semibold transition-colors"
-                    >
-                        Get in Touch
-                    </a>
+
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button className="px-6 py-3 bg-[#28A0E3] hover:bg-[#1e8cc8] text-white rounded-lg font-medium transition flex items-center justify-center gap-2">
+                            Book a Demo <ChevronRight className="h-4 w-4" />
+                        </button>
+                        <button className="px-6 py-3 bg-white hover:bg-gray-50 text-[#28A0E3] border-2 border-[#28A0E3] rounded-lg font-medium transition flex items-center justify-center gap-2">
+                            Contact Our Team <ChevronRight className="h-4 w-4" />
+                        </button>
+                        <button className="px-6 py-3 bg-[#07ECC6] hover:bg-[#06d4b1] text-white rounded-lg font-medium transition flex items-center justify-center gap-2">
+                            Commission Custom Solution <ChevronRight className="h-4 w-4" />
+                        </button>
+                    </div>
                 </div>
             </section>
         </div>

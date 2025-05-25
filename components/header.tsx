@@ -1,174 +1,113 @@
 "use client";
 
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#24ffe9]/75 via-[#24ccff]/75 to-[#00a8c9]/75 backdrop-blur-md shadow-lg rounded-2xl px-6 py-3 z-50 w-[90%] max-w-4xl">
-      <nav className="flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-white">
-          CogniVerse
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <Link
-            href="/"
-            className="text-gray-200 hover:text-white font-semibold"
-          >
-            Home
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all ${isScrolled
+      ? 'bg-[#1fd1f9]/90 backdrop-blur-md shadow-lg py-3'
+      : 'bg-transparent backdrop-blur-none shadow-none py-4'
+      }`}>
+      <div className="container mx-auto px-6">
+        <nav className="flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-white">
+            CogniVerse
           </Link>
 
-          {/* About Us Dropdown */}
-          <div className="relative" onMouseLeave={() => setIsAboutOpen(false)}>
-            <button
-              onClick={() => setIsAboutOpen(!isAboutOpen)}
-              className="flex items-center text-gray-200 hover:text-white font-semibold"
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link
+              href="/"
+              className="text-gray-200 hover:text-white font-semibold"
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/about_us/technology"
+              className="text-gray-200 hover:text-white font-semibold"
             >
               About Us
-              <ChevronDown
-                className={`ml-1 h-4 w-4 transition-transform ${
-                  isAboutOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
+            </Link>
 
-            {isAboutOpen && (
-              <div
-                className="absolute top-full left-0 w-48 bg-gradient-to-br from-[#00a8c9]/75 via-[#24ccff]/75 to-[#24ffe9]/75 backdrop-blur-md rounded-xl shadow-lg py-2"
-                onMouseEnter={() => setIsAboutOpen(true)}
-                onMouseLeave={() => setIsAboutOpen(false)}
-              >
-                <Link
-                  href="/about_us/team"
-                  className="block px-4 py-2 text-gray-200 hover:bg-[#00a8c9] hover:text-white font-semibold"
-                >
-                  Team
-                </Link>
-                <Link
-                  href="/about_us/technology"
-                  className="block px-4 py-2 text-gray-200 hover:bg-[#00a8c9] hover:text-white font-semibold"
-                >
-                  Technology
-                </Link>
-              </div>
-            )}
+            <Link
+              href="/about_us/team"
+              className="text-gray-200 hover:text-white font-semibold"
+            >
+              Partners
+            </Link>
+
+            <Link
+              href="/contact"
+              className="text-gray-200 hover:text-white font-semibold"
+            >
+              Contact
+            </Link>
           </div>
 
-          {/* <Link
-            href="/blog"
-            className="text-gray-200 hover:text-white font-semibold"
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            Blog
-          </Link> */}
-          <Link
-            href="/contact"
-            className="text-gray-200 hover:text-white font-semibold"
-          >
-            Contact
-          </Link>
+            {isMenuOpen ? (
+              <X className="h-6 w-6 text-white" />
+            ) : (
+              <Menu className="h-6 w-6 text-white" />
+            )}
+          </button>
+        </nav>
 
-          {/* <Link
-            href="/contact"
-            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
-          >
-            Get Started
-          </Link> 
-          Redundant*/}
-        </div>
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-4 space-y-4 text-center rounded-xl p-4 bg-gradient-to-br from-[#00a8c9]/90 to-[#24ffe9]/90">
+            <Link
+              href="/"
+              className="block text-gray-200 hover:text-white font-semibold"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6 text-white" />
-          ) : (
-            <Menu className="h-6 w-6 text-white" />
-          )}
-        </button>
-      </nav>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden mt-4 space-y-4 text-center rounded-xl p-4">
-          <Link
-            href="/"
-            className="block text-gray-200 hover:text-white font-semibold"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Home
-          </Link>
-
-          {/* Mobile About Us Dropdown */}
-          <div className="relative">
-            <button
-              className="flex items-center justify-center w-full text-gray-200 hover:text-white font-semibold"
-              onClick={() => setIsAboutOpen(!isAboutOpen)}
+            <Link
+              href="/about"
+              className="block text-gray-200 hover:text-white font-semibold"
+              onClick={() => setIsMenuOpen(false)}
             >
               About Us
-              <ChevronDown
-                className={`ml-1 h-4 w-4 transition-transform ${
-                  isAboutOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
+            </Link>
 
-            {isAboutOpen && (
-              <div className="mt-2 space-y-2 bg-[#00a8c9] rounded-md place-items-start px-4">
-                <Link
-                  href="/about_us/team"
-                  className="block py-2 text-gray-200 hover:text-white pl-4"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsAboutOpen(false);
-                  }}
-                >
-                  Team
-                </Link>
-                <Link
-                  href="/about_us/technology"
-                  className="block py-2 text-gray-200 hover:text-white pl-4"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsAboutOpen(false);
-                  }}
-                >
-                  Technology
-                </Link>
-              </div>
-            )}
+            <Link
+              href="/partners"
+              className="block text-gray-200 hover:text-white font-semibold"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Partners
+            </Link>
+
+            <Link
+              href="/contact"
+              className="block text-gray-200 hover:text-white font-semibold"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
           </div>
-
-          {/* <Link
-            href="/blog"
-            className="block text-gray-200 hover:text-white"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Blog
-          </Link> */}
-          <Link
-            href="/contact"
-            className="block text-gray-200 hover:text-white font-semibold"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contact
-          </Link>
-          {/* <Link
-            href="/contact"
-            className="block px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors text-center"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Get Started
-          </Link> */}
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 }
